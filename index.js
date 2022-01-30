@@ -18,10 +18,14 @@ app.get('/', (req, res) => {
     res.render('dummy');
 });
 
-app.get('/makecamp', async (req, res) => {
-    const camp = new Campground({title: 'Test'});
-    await camp.save();
-    res.send(camp);
+app.get('/campgrounds', async (req, res) => {
+    const allCamps = await Campground.find({});
+    res.render('campgrounds/index', {allCamps});
+});
+
+app.get('/campgrounds/:id', async (req, res) => {
+    const camp = await Campground.findById(req.params.id);
+    res.render('campgrounds/show', {camp});
 });
 
 app.listen(3000, () => {
