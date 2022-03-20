@@ -15,6 +15,7 @@ const ExpressError = require("./utils/ExpressError");
 
 const Campground = require("./models/campground");
 const { campgroundSchema } = require("./schemas");
+const Review = require("./models/review");
 
 main()
   .then(console.log("connected"))
@@ -100,6 +101,20 @@ app.delete(
   catchAsync(async (req, res, next) => {
     const camp = await Campground.findByIdAndDelete(req.params.id);
     res.redirect("/campgrounds");
+  })
+);
+
+app.post(
+  "/campgrounds/:id/reviews",
+  catchAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+
+    await campground.save();
+    await review.save();
+
+    res.redirect(`/campgrounds/${campground._id}`);
   })
 );
 
