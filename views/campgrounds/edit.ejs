@@ -1,5 +1,5 @@
 <%= layout('layouts/boilerplate') %>
-    <form action="/campgrounds/<%= camp._id %>?_method=PUT" method="post" novalidate>
+    <form action="/campgrounds/<%= camp._id %>?_method=PUT" method="post" class="form-validate" novalidate>
         <div class="row">
             <div class="col-md-6 offset-3">
                 <h1 class="text-center">
@@ -43,7 +43,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="price">$</span>
                         <input type="text" class="form-control" placeholder="0.00" aria-label="price"
-                            aria-describedby="basic-addon1" value="<%= camp.price %>" required>
+                            name="campground[price]" aria-describedby="basic-addon1" value="<%= camp.price %>" required>
                         <div class="valid-feedback">
                             <%= validFeedback[Math.floor(Math.random() * validFeedback.length)] %>
                         </div>

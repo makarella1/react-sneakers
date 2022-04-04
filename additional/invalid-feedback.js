@@ -4,5 +4,5 @@ module.exports = [
   "Please proivde a valid data",
   "Come on!",
   "We can't move further",
-  "Try typing something else in!",
+  "Try typing in something else!",
 ];

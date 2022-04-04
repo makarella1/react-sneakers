@@ -20,6 +20,7 @@ const seedDatabase = async () => {
   for (let i = 0; i <= 50; i++) {
     const cityNumber = Math.floor(Math.random() * 1000);
     const newCamp = new Campground({
+      owner: "62486209b2749c16095d86bf",
       title: `${helper(descriptors)} ${helper(places)}`,
       location: `${cities[cityNumber].city}, ${cities[cityNumber].state}`,
       image: "https://source.unsplash.com/collection/10489597",
