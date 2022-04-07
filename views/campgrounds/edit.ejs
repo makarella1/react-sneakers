@@ -1,7 +1,8 @@
 <%= layout('layouts/boilerplate') %>
-    <form action="/campgrounds/<%= camp._id %>?_method=PUT" method="post" class="form-validate" novalidate>
+    <form action="/campgrounds/<%= camp._id %>?_method=PUT" method="post" class="form-validate" novalidate
+        enctype="multipart/form-data">
         <div class="row">
-            <div class="col-md-6 offset-3">
+            <div class="col-md-6 offset-3 mb-3">
                 <h1 class="text-center">
                     Edit A Campground
                 </h1>
@@ -20,17 +21,6 @@
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" id="location" name="campground[location]"
                         value="<%= camp.location %>" required>
-                    <div class="valid-feedback">
-                        <%= validFeedback[Math.floor(Math.random() * validFeedback.length)] %>
-                    </div>
-                    <div class="invalid-feedback">
-                        <%= invalidFeedback[Math.floor(Math.random() * invalidFeedback.length)] %>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" id="image" name="campground[image]"
-                        value="<%= camp.image %>">
                     <div class="valid-feedback">
                         <%= validFeedback[Math.floor(Math.random() * validFeedback.length)] %>
                     </div>
@@ -62,6 +52,26 @@
                     <div class="invalid-feedback">
                         <%= invalidFeedback[Math.floor(Math.random() * invalidFeedback.length)] %>
                     </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" id="images">
+                        <label class="input-group-text" for="images">Add More Images</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <% camp.images.forEach((img, i)=> {%>
+                        <div class="mb-1">
+                            <img src="<%=img.thumbnail%>" class="img-thumbnail" alt="">
+                            <div class="form-check">
+                                <input class="form-check-input" name="deleteImages[]" type="checkbox"
+                                    value="<%=img.filename%>" id="image-<%=i%>">
+                                <label class="form-check-label" for="image-<%=i%>">
+                                    Delete?
+                                </label>
+                            </div>
+                        </div>
+                        <% }) %>
                 </div>
                 <button class="btn btn-success">
                     Save changes

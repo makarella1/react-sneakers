@@ -1,5 +1,5 @@
 <%= layout('layouts/boilerplate') %>
-    <form action="/campgrounds" method="post" class="form-validate" novalidate>
+    <form action="/campgrounds" method="post" class="form-validate" enctype="multipart/form-data" novalidate>
         <div class="row">
             <div class="col-md-6 offset-3">
                 <h1 class="text-center">
@@ -18,16 +18,6 @@
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" id="location" name="campground[location]" required>
-                    <div class="valid-feedback">
-                        <%= validFeedback[Math.floor(Math.random() * validFeedback.length)] %>
-                    </div>
-                    <div class="invalid-feedback">
-                        <%= invalidFeedback[Math.floor(Math.random() * invalidFeedback.length)] %>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="image">Image URL</label>
-                    <input class="form-control" type="text" id="image" name="campground[image]" required>
                     <div class="valid-feedback">
                         <%= validFeedback[Math.floor(Math.random() * validFeedback.length)] %>
                     </div>
@@ -58,6 +48,12 @@
                     </div>
                     <div class="invalid-feedback">
                         <%= invalidFeedback[Math.floor(Math.random() * invalidFeedback.length)] %>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" name="image" id="images" multiple>
+                        <label class="input-group-text" for="images">Image(s)...</label>
                     </div>
                 </div>
                 <button class="btn btn-success">
