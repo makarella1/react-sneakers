@@ -1,34 +1,40 @@
 <%- layout('layouts/boilerplate') %>
 
-    <form action="/login" method="post" class="form-validate" novalidate>
-        <div class="row">
-            <div class="col-md-6 offset-3">
-                <h1 class="text-center">
+    <div class="container d-flex justify-content-center align-items-center mb-4">
+        <div class="card shadow">
+            <div class="card-body">
+                <h5 class="card-title text-center">
                     Log in
-                </h1>
-                <div class="mb-3">
-                    <label class="form-label" for="username">Username</label>
-                    <input class="form-control" type="text" id="username" name="username" required>
-                    <div class="valid-feedback">
-                        Looks good!
+                </h5>
+                <form action="/login" method="post" class="form-validate mt-3" novalidate>
+                    <img src="https://images.unsplash.com/photo-1526491109672-74740652b963?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Y2FtcGdyb3VuZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
+                        alt="Card Image" class="card-img-top">
+                    <div class="my-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" id="username" name="username" autofocus required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Oops...
+                        </div>
                     </div>
-                    <div class="invalid-feedback">
-                        Oops...
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password" required>
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                        <div class="invalid-feedback">
+                            Oops...
+                        </div>
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" required>
-                    <div class="valid-feedback">
-                        Looks good!
+                    <div class="d-grid">
+                        <button class="btn btn-success">
+                            Log in
+                        </button>
                     </div>
-                    <div class="invalid-feedback">
-                        Oops...
-                    </div>
-                </div>
-                <button class="btn btn-success">
-                    Log in
-                </button>
+                </form>
             </div>
         </div>
-    </form>
+    </div>

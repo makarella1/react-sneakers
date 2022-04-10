@@ -1,26 +1,49 @@
 <%= layout('layouts/boilerplate') %>
-    <h1>All Campgrounds</h1>
-    <p><a href="/campgrounds/new">Add New Camp</a></p>
-    <% for (let camp of allCamps) { %>
-        <div class="card mb-3">
-            <div class="row">
-                <div class="col-md-4">
-                    <img class="img-fluid" src="<%=camp.images[0].url%>" alt="image">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <%= camp.title %>
-                        </h5>
-                        <p class="card-text">
-                            <%= camp.description %>
-                        </p>
-                        <p class="text-muted">
-                            <%= camp.location %>
-                        </p>
-                        <a class="btn btn-primary" href="/campgrounds/<%= camp._id %>">View</a>
+    <div id="map" class="cluster-map"></div>
+    <h1 class="text-center my-3">All Campgrounds</h1>
+    <div class="grid">
+        <a class="btn btn-danger d-block shadow mb-3 fw-bold" href="/campgrounds/new">Add your own camp!</a>
+    </div>
+    <% for (let camp of additionalCamps) { %>
+        <div class="campground">
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="card-img h-100" src="<%=camp.images[0].url%>" alt="image">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= camp.title %>
+                            </h5>
+                            <p class="card-text">
+                                <%= camp.description %>
+                            </p>
+                            <p class="text-muted">
+                                <%= camp.location %>
+                            </p>
+                            <a class="btn btn-primary" href="/campgrounds/<%= camp._id %>">View</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <% } %>
+            <nav>
+                <ul class="pagination pagination-sm">
+                    <% for (let i=1; i < allCamps.length / limit; i++) { %>
+                        <li class="page-item <%= parseInt(page) === i ? 'active' : ''%> ">
+                            <a class="page-link" href="/campgrounds/?page=<%=i%>">
+                                <%= i %>
+                            </a>
+                        </li>
+                        <% } %>
+                </ul>
+            </nav>
+            <script>
+                let allCamps = '<%-JSON.stringify(allCamps)%>';
+            </script>
+            <script>
+                const mapBoxToken = '<%-process.env.MAPBOX_TOKEN%>'
+            </script>
+            <script src="/scripts/clusterMap.js"></script>

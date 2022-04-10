@@ -9,8 +9,21 @@ const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
 const geocoder = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
 module.exports.index = async (req, res, next) => {
-  const allCamps = await Campground.find({});
-  res.render("campgrounds/index", { allCamps });
+  let { page } = req.query;
+
+  const limit = 7;
+
+  const allCamps = await Campground.find();
+
+  if (!page || page <= 0 || page > allCamps.length / limit) {
+    page = 1;
+  }
+
+  const additionalCamps = await Campground.find()
+    .limit(limit)
+    .skip((page - 1) * limit);
+
+  res.render("campgrounds/index", { additionalCamps, allCamps, page, limit });
 };
 
 module.exports.renderNewForm = (req, res, next) => {
@@ -54,7 +67,6 @@ module.exports.createCampground = async (req, res, next) => {
   newCamp.images = images;
   newCamp.owner = req.user._id;
   await newCamp.save();
-  console.log(newCamp);
   req.flash("success", "Successfully made a new campground!");
   res.redirect(`campgrounds/${newCamp._id}`);
 };
