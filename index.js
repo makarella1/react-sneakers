@@ -23,24 +23,31 @@ const ejsMate = require("ejs-mate");
 
 const ExpressError = require("./utils/ExpressError");
 
+const MongoStore = require("connect-mongo");
+
+const dbUrl = process.env.DB_URL;
+
+const port = process.env.PORT || 3000;
+
 (async () => {
   try {
-    await app.listen(3000, () => {
-      console.log("Ready to go on 3000");
+    await app.listen(port, () => {
+      console.log(`Ready to go on ${port}`);
     });
-    await mongoose
-      .connect(
-        "mongodb+srv://admin:admin@cluster0.souit.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-      )
-      .then(() => console.log("Mongo is ready!"));
+    await mongoose.connect(dbUrl).then(() => console.log("Mongo is ready!"));
   } catch (e) {
     console.log(e);
   }
 })();
 
 const sessionOptions = {
+  store: new MongoStore({
+    mongoUrl: dbUrl,
+    secret: process.env.SECRET,
+    touchAfter: 24 * 60 * 60,
+  }),
   name: "session",
-  secret: "secret",
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
