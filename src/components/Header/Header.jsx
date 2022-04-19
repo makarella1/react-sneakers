@@ -1,12 +1,12 @@
-import logo from "../images/logo.png";
-import cart from "../images/cart.svg";
-import user from "../images/user.svg";
+import styles from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <header className="d-flex justify-between align-center p-40">
+    <header
+      className={`${styles.header} d-flex justify-between align-center p-40`}
+    >
       <div className="d-flex align-center">
-        <img width={40} height={40} src={logo} alt="Logo" />
+        <img width={40} height={40} src="/images/logo.png" alt="Logo" />
         <div>
           <h3 className="text-uppercase">React Sneakers</h3>
           <p className="opacity-5">Магазин лучших кроссовок</p>
@@ -14,11 +14,11 @@ const Header = () => {
       </div>
       <ul className="d-flex">
         <li className="mr-30">
-          <img width={18} height={18} src={cart} alt="Cart" />
+          <img width={18} height={18} src="/images/cart.svg" alt="Cart" />
           <span>1205 грн.</span>
         </li>
         <li>
-          <img width={18} height={18} src={user} alt="User" />
+          <img width={18} height={18} src="/images/user.svg" alt="User" />
         </li>
       </ul>
     </header>
