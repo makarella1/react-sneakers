@@ -1,6 +1,6 @@
 import styles from "./Header.module.scss";
 
-const Header = () => {
+const Header = ({ onCartOpened }) => {
   return (
     <header
       className={`${styles.header} d-flex justify-between align-center p-40`}
@@ -13,7 +13,7 @@ const Header = () => {
         </div>
       </div>
       <ul className="d-flex">
-        <li className="mr-30">
+        <li className={styles.cart} onClick={onCartOpened}>
           <img width={18} height={18} src="/images/cart.svg" alt="Cart" />
           <span>1205 грн.</span>
         </li>

@@ -1,52 +1,43 @@
 import styles from "./Drawer.module.scss";
 
-const Drawer = () => {
+const Drawer = ({ items, onCartClosed }) => {
   return (
-    <div className={styles.backdrop} style={{ display: "none" }}>
+    <div className={styles.backdrop}>
       <div className={styles.drawer}>
         <h2 className="mb-30 d-flex justify-between align-center">
           Корзина
           <img
+            onClick={onCartClosed}
             className="removeBtn cu-p"
             src="/images/btn-remove.svg"
             alt="Remove"
           />
         </h2>
         <div className={styles.items}>
-          <div className={`${styles.cartItem} d-flex align-center mb-20`}>
-            <div
-              style={{
-                backgroundImage: `url(/images/sneakers/2.jpg)`,
-              }}
-              className={styles.cartItemImg}
-            ></div>
-            <div className="flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <strong>4999 грн.</strong>
-            </div>
-            <img
-              className="removeBtn cu-p"
-              src="/images/btn-remove.svg"
-              alt="Remove"
-            />
-          </div>
-          <div className={`${styles.cartItem} d-flex align-center mb-20`}>
-            <div
-              style={{
-                backgroundImage: `url(/images/sneakers/2.jpg)`,
-              }}
-              className={styles.cartItemImg}
-            ></div>
-            <div className="flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <strong>4999 грн.</strong>
-            </div>
-            <img
-              className="removeBtn cu-p"
-              src="/images/btn-remove.svg"
-              alt="Remove"
-            />
-          </div>
+          {items.map((item) => {
+            return (
+              <div
+                className={`${styles.cartItem} d-flex align-center mb-20`}
+                key={item.id}
+              >
+                <div
+                  style={{
+                    backgroundImage: `url(${item.imageUrl})`,
+                  }}
+                  className={styles.cartItemImg}
+                ></div>
+                <div className="flex">
+                  <p className="mb-5">{item.title}</p>
+                  <strong>{item.price}</strong>
+                </div>
+                <img
+                  className="removeBtn cu-p"
+                  src="/images/btn-remove.svg"
+                  alt="Remove"
+                />
+              </div>
+            );
+          })}
         </div>
         <div className={styles.cartTotal}>
           <ul>

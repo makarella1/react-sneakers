@@ -1,35 +1,45 @@
+import axios from "axios";
+
+import { useEffect, useState } from "react";
+
 import Drawer from "./components/Drawer";
 import Card from "./components/Card";
 import Header from "./components/Header";
 
-const data = [
-  {
-    title: "Мужские Кроссовки Nike Blazer Mid Suede",
-    price: 5999,
-    imageUrl: "../images/sneakers/1.jpg",
-  },
-  {
-    title: "Мужские Кроссовки Nike Air Max 270",
-    price: 5999,
-    imageUrl: "../images/sneakers/2.jpg",
-  },
-  {
-    title: "Мужские Кроссовки Nike Blazer Mid Suede",
-    price: 3499,
-    imageUrl: "../images/sneakers/3.jpg",
-  },
-  {
-    title: "Кроссовки Puma X Aka Boku Future Rider",
-    price: 3999,
-    imageUrl: "../images/sneakers/4.jpg",
-  },
-];
-
 const App = () => {
+  const [sneakersData, setSneakersData] = useState([]);
+  const [isCartOpened, setIsCartOpened] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+
+  useEffect(() => {
+    const fetchSneakersData = async () => {
+      const response = await axios.get(
+        "https://625f9a9053a42eaa07f777b7.mockapi.io/sneakers"
+      );
+      setSneakersData(response.data);
+    };
+
+    fetchSneakersData();
+  }, []);
+
+  const cartOpenedHandler = () => {
+    setIsCartOpened(true);
+  };
+
+  const cartClosedHandler = () => {
+    setIsCartOpened(false);
+  };
+
+  const cartItemAddedHandler = (item) => {
+    setCartItems((prevItems) => [item, ...prevItems]);
+  };
+
   return (
     <div className="wrapper clear">
-      <Drawer />
-      <Header />
+      {isCartOpened && (
+        <Drawer items={cartItems} onCartClosed={cartClosedHandler} />
+      )}
+      <Header onCartOpened={cartOpenedHandler} />
       <main className="content p-40">
         <div className="d-flex justify-between align-center mb-40">
           <h1>Все кроссовки</h1>
@@ -40,12 +50,15 @@ const App = () => {
         </div>
 
         <div className="d-flex justify-between flex-wrap">
-          {data.map((item) => {
+          {sneakersData.map((item) => {
             return (
               <Card
                 title={item.title}
                 price={item.price}
                 imageUrl={item.imageUrl}
+                id={item.id}
+                onCartItemAdded={cartItemAddedHandler}
+                key={item.id}
               />
             );
           })}
