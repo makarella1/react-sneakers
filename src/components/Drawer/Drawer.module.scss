@@ -67,29 +67,3 @@
   overflow: auto;
   margin-bottom: 40px;
 }
-
-.cartItem {
-  border: 1px solid #f3f3f3;
-  border-radius: 20px;
-  padding: 20px;
-
-  overflow: hidden;
-
-  .cartItemImg {
-    height: 70px;
-    width: 70px;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    margin-right: 20px;
-  }
-
-  p {
-    font-size: 16px;
-    margin: 0;
-  }
-
-  stong {
-    font-size: 14px;
-  }
-}

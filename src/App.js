@@ -10,16 +10,22 @@ const App = () => {
   const [sneakersData, setSneakersData] = useState([]);
   const [isCartOpened, setIsCartOpened] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    const fetchSneakersData = async () => {
-      const response = await axios.get(
+    const fetchData = async () => {
+      const sneakersData = await axios.get(
         "https://625f9a9053a42eaa07f777b7.mockapi.io/sneakers"
       );
-      setSneakersData(response.data);
+      setSneakersData(sneakersData.data);
+
+      const cartData = await axios.get(
+        "https://625f9a9053a42eaa07f777b7.mockapi.io/cart"
+      );
+      setCartItems(cartData.data);
     };
 
-    fetchSneakersData();
+    fetchData();
   }, []);
 
   const cartOpenedHandler = () => {
@@ -30,27 +36,69 @@ const App = () => {
     setIsCartOpened(false);
   };
 
-  const cartItemAddedHandler = (item) => {
+  const cartItemAddedHandler = async (item) => {
+    await axios.post("https://625f9a9053a42eaa07f777b7.mockapi.io/cart", item);
     setCartItems((prevItems) => [item, ...prevItems]);
   };
+
+  const deleteCartItemHandler = async (id) => {
+    // await axios.delete(
+    //   `https://625f9a9053a42eaa07f777b7.mockapi.io/cart/${id}`
+    // );
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const inputHandler = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const clearSearchHandler = () => {
+    setSearchTerm("");
+  };
+
+  const filteredSneakersData = sneakersData.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const header =
+    searchTerm.length > 0 ? `Поиск по "${searchTerm}"` : "Все кроссовки";
+
+  const showClearBtn = searchTerm.length > 0 && (
+    <img
+      className="cu-p"
+      src="/images/btn-remove.svg"
+      alt="Search"
+      onClick={clearSearchHandler}
+    />
+  );
 
   return (
     <div className="wrapper clear">
       {isCartOpened && (
-        <Drawer items={cartItems} onCartClosed={cartClosedHandler} />
+        <Drawer
+          items={cartItems}
+          onCartClosed={cartClosedHandler}
+          onDeleteCartItem={deleteCartItemHandler}
+        />
       )}
       <Header onCartOpened={cartOpenedHandler} />
       <main className="content p-40">
         <div className="d-flex justify-between align-center mb-40">
-          <h1>Все кроссовки</h1>
+          <h1>{header}</h1>
           <div className="search-block d-flex">
             <img src="/images/search.svg" alt="Search" />
-            <input type="text" placeholder="Поиск..." />
+            <input
+              value={searchTerm}
+              onChange={inputHandler}
+              type="text"
+              placeholder="Поиск..."
+            />
+            {showClearBtn}
           </div>
         </div>
 
         <div className="d-flex justify-between flex-wrap">
-          {sneakersData.map((item) => {
+          {filteredSneakersData.map((item) => {
             return (
               <Card
                 title={item.title}

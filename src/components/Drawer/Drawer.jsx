@@ -1,6 +1,7 @@
 import styles from "./Drawer.module.scss";
+import CartItem from "../CartItem";
 
-const Drawer = ({ items, onCartClosed }) => {
+const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
   return (
     <div className={styles.backdrop}>
       <div className={styles.drawer}>
@@ -16,26 +17,14 @@ const Drawer = ({ items, onCartClosed }) => {
         <div className={styles.items}>
           {items.map((item) => {
             return (
-              <div
-                className={`${styles.cartItem} d-flex align-center mb-20`}
+              <CartItem
                 key={item.id}
-              >
-                <div
-                  style={{
-                    backgroundImage: `url(${item.imageUrl})`,
-                  }}
-                  className={styles.cartItemImg}
-                ></div>
-                <div className="flex">
-                  <p className="mb-5">{item.title}</p>
-                  <strong>{item.price}</strong>
-                </div>
-                <img
-                  className="removeBtn cu-p"
-                  src="/images/btn-remove.svg"
-                  alt="Remove"
-                />
-              </div>
+                id={item.id}
+                title={item.title}
+                price={item.price}
+                imageUrl={item.imageUrl}
+                onRemoveCartItem={onDeleteCartItem}
+              />
             );
           })}
         </div>
