@@ -2,18 +2,9 @@ import styles from "./Drawer.module.scss";
 import CartItem from "../CartItem";
 
 const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
-  return (
-    <div className={styles.backdrop}>
-      <div className={styles.drawer}>
-        <h2 className="mb-30 d-flex justify-between align-center">
-          Корзина
-          <img
-            onClick={onCartClosed}
-            className="removeBtn cu-p"
-            src="/images/btn-remove.svg"
-            alt="Remove"
-          />
-        </h2>
+  const cartContent =
+    items.length > 0 ? (
+      <>
         <div className={styles.items}>
           {items.map((item) => {
             return (
@@ -45,6 +36,45 @@ const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
             Оформить заказ <img src="/images/arrow.svg" alt="Order" />
           </button>
         </div>
+      </>
+    ) : (
+      <div
+        className={`${styles.cartEmpty} d-flex align-center justify-center flex-column flex`}
+      >
+        <img
+          className="mb-20"
+          width="120px"
+          height="120px"
+          src="/images/empty-cart.jpg"
+          alt="Empty"
+        />
+        <h2>Корзина пустая</h2>
+        <p className="opacity-6">
+          Нам нужна хотя бы одна пара кроссовок, чтобы оформить заказ
+        </p>
+        <button
+          onClick={onCartClosed}
+          className={`${styles.btnPrimary} btnPrimary`}
+        >
+          <img src="/images/arrow.svg" alt="Arrow" />
+          Вернуться назад
+        </button>
+      </div>
+    );
+
+  return (
+    <div className={styles.backdrop}>
+      <div className={styles.drawer}>
+        <h2 className="mb-30 d-flex justify-between align-center">
+          Корзина
+          <img
+            onClick={onCartClosed}
+            className="removeBtn cu-p"
+            src="/images/btn-remove.svg"
+            alt="Remove"
+          />
+        </h2>
+        {cartContent}
       </div>
     </div>
   );

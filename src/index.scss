@@ -32,12 +32,25 @@ body {
   cursor: pointer;
   transition: background-color 0.1s ease-in-out;
 
+  img {
+    position: relative;
+    top: 1px;
+    margin-left: 15px;
+    transition: transform 0.15s ease-in-out;
+  }
+
   &:hover {
     background-color: lighten($color: #9dd558, $amount: 5%);
   }
 
   &:active {
     background-color: darken($color: #9dd558, $amount: 5%);
+  }
+
+  &:hover {
+    img {
+      transform: translateX(3px);
+    }
   }
 }
 
