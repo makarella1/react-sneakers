@@ -1,10 +1,10 @@
 import Card from "../components/Card";
+import Context from "../context";
+import { useContext } from "react";
 
-const Favorites = ({
-  cartItemAddedHandler,
-  addedToFavoritesHandler,
-  favoritesData,
-}) => {
+const Favorites = ({ cartItemAddedHandler, addedToFavoritesHandler }) => {
+  const { favoritesData } = useContext(Context);
+  console.log(favoritesData);
   return (
     <main className="content p-40">
       <div className="d-flex justify-between align-center mb-40">

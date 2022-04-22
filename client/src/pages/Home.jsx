@@ -7,6 +7,9 @@ const Home = ({
   cartItemAddedHandler,
   addedToFavoritesHandler,
   sneakersData,
+  cartItems,
+  favoritesData,
+  isLoading,
 }) => {
   const filteredSneakersData = sneakersData.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -22,6 +25,28 @@ const Home = ({
       alt="Search"
       onClick={clearSearchHandler}
     />
+  );
+
+  const renderItems = (isLoading ? [...Array(8)] : filteredSneakersData).map(
+    (item, index) => {
+      return (
+        <Card
+          {...item}
+          isLoading={isLoading}
+          onCartItemAdded={cartItemAddedHandler}
+          onAddedToFavorites={addedToFavoritesHandler}
+          key={item ? item.id : index}
+          isInCart={
+            item && cartItems.some((obj) => obj.id === item.id) ? true : false
+          }
+          isInFavorites={
+            item && favoritesData.some((obj) => obj.id === item.id)
+              ? true
+              : false
+          }
+        />
+      );
+    }
   );
 
   return (
@@ -40,19 +65,7 @@ const Home = ({
         </div>
       </div>
 
-      <div className="d-flex justify-between flex-wrap">
-        {filteredSneakersData.map((item) => {
-          return (
-            <Card
-              {...item}
-              onCartItemAdded={cartItemAddedHandler}
-              onAddedToFavorites={addedToFavoritesHandler}
-              key={item.id}
-              isInFavorites={false}
-            />
-          );
-        })}
-      </div>
+      <div className="d-flex justify-between flex-wrap">{renderItems}</div>
     </main>
   );
 };

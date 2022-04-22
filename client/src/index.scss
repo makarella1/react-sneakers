@@ -11,6 +11,11 @@ body {
   background-color: #e5e5e5;
 }
 
+.overflow-hidden {
+  height: 100%;
+  overflow: hidden;
+}
+
 .wrapper {
   max-width: 1080px;
   margin: 50px auto;
