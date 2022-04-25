@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./Card.module.scss";
 import Loader from "../UI/Loader";
 
@@ -13,16 +12,11 @@ const Card = ({
   isInCart,
   isLoading = false,
 }) => {
-  const [isAdded, setIsAdded] = useState(isInCart);
-  const [isFavorite, setIsFavorite] = useState(isInFavorites);
-
   const addedHandler = () => {
-    setIsAdded(!isAdded);
     onCartItemAdded({ title, imageUrl, price, id });
   };
 
   const favoriteHandler = () => {
-    setIsFavorite(!isFavorite);
     onAddedToFavorites({ title, imageUrl, price, id });
   };
 

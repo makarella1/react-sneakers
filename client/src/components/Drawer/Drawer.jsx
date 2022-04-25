@@ -1,12 +1,50 @@
+import Context from "../../context";
+import { useContext, useState } from "react";
+
+import { v4 as uuidv4 } from "uuid";
+
+import axios from "axios";
+
 import styles from "./Drawer.module.scss";
 import CartItem from "../CartItem";
+import CartInfo from "../CartInfo/CartInfo";
 
-const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
+const Drawer = ({ onDeleteCartItem }) => {
+  const [isOrdered, setIsOrdered] = useState(false);
+  const [orderId, setOrderId] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const { cartItems, cartClosedHandler, setCartItems } = useContext(Context);
+
+  const clearData = async (arr) => {
+    for (let item of arr) {
+      await axios.delete(`http://localhost:3001/cart/${item.id}`);
+    }
+  };
+
+  const orderedHandler = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.post("http://localhost:3001/orders", {
+        id: uuidv4(),
+        items: cartItems,
+      });
+      setOrderId(response.data.id);
+      setCartItems([]);
+      setIsOrdered(true);
+
+      await clearData(cartItems);
+    } catch (e) {
+      alert("Не удалось оформить заказ, попробуйте позже :(");
+    }
+    setIsLoading(false);
+  };
+
   const cartContent =
-    items.length > 0 ? (
+    cartItems.length > 0 ? (
       <>
         <div className={styles.items}>
-          {items.map((item) => {
+          {cartItems.map((item) => {
             return (
               <CartItem
                 key={item.id}
@@ -32,34 +70,39 @@ const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
               <strong>499</strong>
             </li>
           </ul>
-          <button className="btnPrimary">
+          <button
+            className={
+              isLoading ? `${styles.disabled} btnPrimary` : "btnPrimary"
+            }
+            onClick={orderedHandler}
+          >
             Оформить заказ <img src="/images/arrow.svg" alt="Order" />
           </button>
         </div>
       </>
     ) : (
-      <div
-        className={`${styles.cartEmpty} d-flex align-center justify-center flex-column flex`}
-      >
-        <img
-          className="mb-20"
-          width="120px"
-          height="120px"
-          src="/images/empty-cart.jpg"
-          alt="Empty"
-        />
-        <h2>Корзина пустая</h2>
-        <p className="opacity-6">
-          Нам нужна хотя бы одна пара кроссовок, чтобы оформить заказ
-        </p>
-        <button
-          onClick={onCartClosed}
-          className={`${styles.btnPrimary} btnPrimary`}
-        >
-          <img src="/images/arrow.svg" alt="Arrow" />
-          Вернуться назад
-        </button>
-      </div>
+      <CartInfo
+        title={
+          isOrdered ? (
+            <span style={{ color: "#87C20A" }}>Заказ оформлен!</span>
+          ) : (
+            "Корзина пустая"
+          )
+        }
+        description={
+          isOrdered ? (
+            <span>
+              Ваш заказ <strong>{orderId}</strong> скоро будет передан
+              курьерской доставке
+            </span>
+          ) : (
+            "Нам нужна хотя бы одна пара кроссовок, чтобы оформить заказ"
+          )
+        }
+        image={
+          isOrdered ? "/images/complete-order.jpg" : "/images/empty-cart.jpg"
+        }
+      />
     );
 
   return (
@@ -68,7 +111,7 @@ const Drawer = ({ items, onCartClosed, onDeleteCartItem }) => {
         <h2 className="mb-30 d-flex justify-between align-center">
           Корзина
           <img
-            onClick={onCartClosed}
+            onClick={cartClosedHandler}
             className="removeBtn cu-p"
             src="/images/btn-remove.svg"
             alt="Remove"

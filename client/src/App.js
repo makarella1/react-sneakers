@@ -97,44 +97,34 @@ const App = () => {
   };
 
   return (
-    <Context.Provider value={{ sneakersData, cartItems, favoritesData }}>
+    <Context.Provider
+      value={{
+        sneakersData,
+        cartItems,
+        favoritesData,
+        cartItemAddedHandler,
+        addedToFavoritesHandler,
+        cartClosedHandler,
+        setCartItems,
+      }}
+    >
       {" "}
       <div className="wrapper clear">
-        {isCartOpened && (
-          <Drawer
-            items={cartItems}
-            onCartClosed={cartClosedHandler}
-            onDeleteCartItem={deleteCartItemHandler}
-          />
-        )}
+        {isCartOpened && <Drawer onDeleteCartItem={deleteCartItemHandler} />}
         <Header onCartOpened={cartOpenedHandler} />
         <Routes>
           <Route
             path="/"
             element={
               <Home
-                favoritesData={favoritesData}
                 searchTerm={searchTerm}
                 clearSearchHandler={clearSearchHandler}
                 inputHandler={inputHandler}
-                cartItemAddedHandler={cartItemAddedHandler}
-                addedToFavoritesHandler={addedToFavoritesHandler}
-                sneakersData={sneakersData}
-                cartItems={cartItems}
                 isLoading={isLoading}
               />
             }
           ></Route>
-          <Route
-            path="/favorites"
-            element={
-              <Favorites
-                cartItemAddedHandler={cartItemAddedHandler}
-                addedToFavoritesHandler={addedToFavoritesHandler}
-                favoritesData={favoritesData}
-              />
-            }
-          ></Route>
+          <Route path="/favorites" element={<Favorites />}></Route>
         </Routes>
       </div>
     </Context.Provider>

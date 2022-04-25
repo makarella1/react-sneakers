@@ -1,16 +1,16 @@
 import Card from "../components/Card";
+import Context from "../context";
+import { useContext } from "react";
 
-const Home = ({
-  searchTerm,
-  clearSearchHandler,
-  inputHandler,
-  cartItemAddedHandler,
-  addedToFavoritesHandler,
-  sneakersData,
-  cartItems,
-  favoritesData,
-  isLoading,
-}) => {
+const Home = ({ searchTerm, clearSearchHandler, inputHandler, isLoading }) => {
+  const {
+    sneakersData,
+    cartItems,
+    favoritesData,
+    cartItemAddedHandler,
+    addedToFavoritesHandler,
+  } = useContext(Context);
+
   const filteredSneakersData = sneakersData.filter((item) =>
     item.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -27,6 +27,10 @@ const Home = ({
     />
   );
 
+  const isItemAdded = (item, array) => {
+    return item && array.some((obj) => obj.id === item.id) ? true : false;
+  };
+
   const renderItems = (isLoading ? [...Array(8)] : filteredSneakersData).map(
     (item, index) => {
       return (
@@ -36,14 +40,8 @@ const Home = ({
           onCartItemAdded={cartItemAddedHandler}
           onAddedToFavorites={addedToFavoritesHandler}
           key={item ? item.id : index}
-          isInCart={
-            item && cartItems.some((obj) => obj.id === item.id) ? true : false
-          }
-          isInFavorites={
-            item && favoritesData.some((obj) => obj.id === item.id)
-              ? true
-              : false
-          }
+          isInCart={isItemAdded(item, cartItems)}
+          isInFavorites={isItemAdded(item, favoritesData)}
         />
       );
     }
