@@ -1,5 +1,5 @@
-import Context from "../../context";
-import { useContext, useState } from "react";
+import { useState } from "react";
+import { useCart } from "../../hooks/useCart";
 
 import { v4 as uuidv4 } from "uuid";
 
@@ -7,14 +7,15 @@ import axios from "axios";
 
 import styles from "./Drawer.module.scss";
 import CartItem from "../CartItem";
-import CartInfo from "../CartInfo/CartInfo";
+import CartInfo from "../CartInfo";
 
 const Drawer = ({ onDeleteCartItem }) => {
   const [isOrdered, setIsOrdered] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { cartItems, cartClosedHandler, setCartItems } = useContext(Context);
+  const { cartItems, totalPrice, tax, cartClosedHandler, setCartItems } =
+    useCart();
 
   const clearData = async (arr) => {
     for (let item of arr) {
@@ -62,12 +63,12 @@ const Drawer = ({ onDeleteCartItem }) => {
             <li>
               <span>Итого:</span>
               <div></div>
-              <strong>9998 грн.</strong>
+              <strong>{totalPrice} грн.</strong>
             </li>
             <li>
               <span>Налог 5%:</span>
               <div></div>
-              <strong>499</strong>
+              <strong>{tax} грн.</strong>
             </li>
           </ul>
           <button

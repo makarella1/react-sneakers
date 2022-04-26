@@ -14,4 +14,23 @@
     margin-right: 30px;
     cursor: pointer;
   }
+
+  .headerActions {
+    display: flex;
+  }
+}
+
+@media (max-width: 667px) {
+  .header {
+    flex-direction: column;
+  }
+  .cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin-bottom: 5px;
+    }
+  }
 }

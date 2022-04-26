@@ -49,8 +49,8 @@ const Home = ({ searchTerm, clearSearchHandler, inputHandler, isLoading }) => {
 
   return (
     <main className="content p-40">
-      <div className="d-flex justify-between align-center mb-40">
-        <h1>{header}</h1>
+      <div className="search d-flex justify-between align-center mb-40">
+        <h1 className="mainHeader">{header}</h1>
         <div className="search-block d-flex">
           <img src="/images/search.svg" alt="Search" />
           <input
@@ -63,7 +63,9 @@ const Home = ({ searchTerm, clearSearchHandler, inputHandler, isLoading }) => {
         </div>
       </div>
 
-      <div className="d-flex justify-between flex-wrap">{renderItems}</div>
+      <div className="sneakersContainer d-flex justify-between flex-wrap">
+        {renderItems}
+      </div>
     </main>
   );
 };

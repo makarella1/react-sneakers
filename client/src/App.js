@@ -7,9 +7,10 @@ import { Routes, Route } from "react-router-dom";
 
 import Drawer from "./components/Drawer";
 import Header from "./components/Header";
-import Favorites from "./pages/Favorites";
 
+import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
+import Orders from "./pages/Orders";
 
 const App = () => {
   const [sneakersData, setSneakersData] = useState([]);
@@ -108,7 +109,6 @@ const App = () => {
         setCartItems,
       }}
     >
-      {" "}
       <div className="wrapper clear">
         {isCartOpened && <Drawer onDeleteCartItem={deleteCartItemHandler} />}
         <Header onCartOpened={cartOpenedHandler} />
@@ -125,6 +125,7 @@ const App = () => {
             }
           ></Route>
           <Route path="/favorites" element={<Favorites />}></Route>
+          <Route path="/orders" element={<Orders />}></Route>
         </Routes>
       </div>
     </Context.Provider>
