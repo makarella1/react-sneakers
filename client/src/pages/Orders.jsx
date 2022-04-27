@@ -8,10 +8,14 @@ const Orders = () => {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    (async () => {
-      const ordersData = await axios.get("http://localhost:3001/orders");
-      setOrders(ordersData.data);
-    })();
+    try {
+      (async () => {
+        const ordersData = await axios.get("http://localhost:3001/orders");
+        setOrders(ordersData.data);
+      })();
+    } catch (error) {
+      alert("Не удалось загрузить заказы :(");
+    }
   }, []);
 
   return (
@@ -21,7 +25,7 @@ const Orders = () => {
       {orders.map((order) => {
         return (
           <div key={order.id} className="mb-40">
-            <div className="d-flex align-center justify-center">
+            <div className="d-flex align-center">
               <h3>Заказ № {order.id}</h3>
             </div>
             <div className="d-flex flex-wrap">

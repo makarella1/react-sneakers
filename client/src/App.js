@@ -22,14 +22,20 @@ const App = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const sneakersData = await axios.get("http://localhost:3001/sneakers");
-      setSneakersData(sneakersData.data);
+      try {
+        const [sneakersData, cartData, favoritesData] = await Promise.all([
+          axios.get("http://localhost:3001/sneakers"),
+          axios.get("http://localhost:3001/cart"),
+          axios.get("http://localhost:3001/favorites"),
+        ]);
 
-      const cartData = await axios.get("http://localhost:3001/cart");
-      setCartItems(cartData.data);
-
-      const favoritesData = await axios.get("http://localhost:3001/favorites");
-      setFavoritesData(favoritesData.data);
+        setSneakersData(sneakersData.data);
+        setCartItems(cartData.data);
+        setFavoritesData(favoritesData.data);
+      } catch (error) {
+        alert("Ошибка при запросе данных :(");
+        console.error(error);
+      }
 
       setIsLoading(false);
     };
@@ -59,8 +65,9 @@ const App = () => {
         const cartData = await axios.get("http://localhost:3001/cart");
         setCartItems(cartData.data);
       }
-    } catch (e) {
+    } catch (error) {
       alert("Что-то пошло не так :(");
+      console.error(error);
     }
   };
 
@@ -79,14 +86,20 @@ const App = () => {
         );
         setFavoritesData(favoritesData.data);
       }
-    } catch (e) {
+    } catch (error) {
       alert("Что-то пошло не так :(");
+      console.error(error);
     }
   };
 
   const deleteCartItemHandler = async (id) => {
-    await axios.delete(`http://localhost:3001/cart/${id}`);
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    try {
+      await axios.delete(`http://localhost:3001/cart/${id}`);
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    } catch (error) {
+      alert("Ошибка при удалении товара :(");
+      console.error(error);
+    }
   };
 
   const inputHandler = (e) => {
@@ -110,7 +123,10 @@ const App = () => {
       }}
     >
       <div className="wrapper clear">
-        {isCartOpened && <Drawer onDeleteCartItem={deleteCartItemHandler} />}
+        <Drawer
+          onDeleteCartItem={deleteCartItemHandler}
+          opened={isCartOpened}
+        />
         <Header onCartOpened={cartOpenedHandler} />
         <Routes>
           <Route

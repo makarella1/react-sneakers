@@ -9,7 +9,7 @@ import styles from "./Drawer.module.scss";
 import CartItem from "../CartItem";
 import CartInfo from "../CartInfo";
 
-const Drawer = ({ onDeleteCartItem }) => {
+const Drawer = ({ onDeleteCartItem, opened }) => {
   const [isOrdered, setIsOrdered] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +18,13 @@ const Drawer = ({ onDeleteCartItem }) => {
     useCart();
 
   const clearData = async (arr) => {
-    for (let item of arr) {
-      await axios.delete(`http://localhost:3001/cart/${item.id}`);
+    try {
+      for (let item of arr) {
+        await axios.delete(`http://localhost:3001/cart/${item.id}`);
+      }
+    } catch (error) {
+      alert("Не удалось очистить корзину после оформления заказа :(");
+      console.error(error);
     }
   };
 
@@ -35,8 +40,9 @@ const Drawer = ({ onDeleteCartItem }) => {
       setIsOrdered(true);
 
       await clearData(cartItems);
-    } catch (e) {
+    } catch (error) {
       alert("Не удалось оформить заказ, попробуйте позже :(");
+      console.error(error);
     }
     setIsLoading(false);
   };
@@ -107,7 +113,9 @@ const Drawer = ({ onDeleteCartItem }) => {
     );
 
   return (
-    <div className={styles.backdrop}>
+    <div
+      className={`${styles.backdrop} ${opened ? styles.backdropVisible : ""}`}
+    >
       <div className={styles.drawer}>
         <h2 className="mb-30 d-flex justify-between align-center">
           Корзина

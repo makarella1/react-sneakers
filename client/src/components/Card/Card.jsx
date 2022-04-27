@@ -12,12 +12,14 @@ const Card = ({
   isInCart,
   isLoading = false,
 }) => {
+  const item = { title, imageUrl, price, id };
+
   const addedHandler = () => {
-    onCartItemAdded({ title, imageUrl, price, id });
+    onCartItemAdded(item);
   };
 
   const favoriteHandler = () => {
-    onAddedToFavorites({ title, imageUrl, price, id });
+    onAddedToFavorites(item);
   };
 
   return isLoading ? (
