@@ -16,7 +16,7 @@ const CartInfo = ({ title, description, image }) => {
         onClick={cartClosedHandler}
         className={`${styles.btnPrimary} btnPrimary`}
       >
-        <img src="/images/arrow.svg" alt="Arrow" />
+        <img src="images/arrow.svg" alt="Arrow" />
         Вернуться назад
       </button>
     </div>

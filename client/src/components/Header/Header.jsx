@@ -13,7 +13,7 @@ const Header = ({ onCartOpened }) => {
     >
       <Link to="/">
         <div className="d-flex align-center">
-          <img width={40} height={40} src="/images/logo.png" alt="Logo" />
+          <img width={40} height={40} src="images/logo.png" alt="Logo" />
           <div>
             <h3 className="text-uppercase">React Sneakers</h3>
             <p className="opacity-5">Магазин лучших кроссовок</p>
@@ -22,7 +22,7 @@ const Header = ({ onCartOpened }) => {
       </Link>
       <ul className={styles.headerActions}>
         <li className={styles.cart} onClick={onCartOpened}>
-          <img width={18} height={18} src="/images/cart.svg" alt="Cart" />
+          <img width={18} height={18} src="images/cart.svg" alt="Cart" />
           <span>{totalPrice} грн.</span>
         </li>
         <Link to="/favorites">
@@ -30,14 +30,14 @@ const Header = ({ onCartOpened }) => {
             <img
               width={18}
               height={18}
-              src="/images/heart.svg"
+              src="images/heart.svg"
               alt="Favorites"
             />
           </li>
         </Link>
         <Link to="/orders">
           <li className={styles.cart}>
-            <img width={18} height={18} src="/images/user.svg" alt="User" />
+            <img width={18} height={18} src="images/user.svg" alt="User" />
           </li>
         </Link>
       </ul>

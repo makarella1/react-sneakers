@@ -28,7 +28,7 @@ const Card = ({
     <div className={styles.card}>
       <div className={styles.favorite} onClick={favoriteHandler}>
         <img
-          src={isInFavorites ? "/images/liked.svg" : "/images/unliked.svg"}
+          src={isInFavorites ? "images/liked.svg" : "images/unliked.svg"}
           alt="Unliked"
         />
       </div>
@@ -44,7 +44,7 @@ const Card = ({
           className={styles.cart}
           width={32}
           height={32}
-          src={isInCart ? "/images/checked.svg" : "/images/plus.svg"}
+          src={isInCart ? "images/checked.svg" : "images/plus.svg"}
           alt="Plus"
         />
       </div>

@@ -83,7 +83,7 @@ const Drawer = ({ onDeleteCartItem, opened }) => {
             }
             onClick={orderedHandler}
           >
-            Оформить заказ <img src="/images/arrow.svg" alt="Order" />
+            Оформить заказ <img src="images/arrow.svg" alt="Order" />
           </button>
         </div>
       </>
@@ -107,7 +107,7 @@ const Drawer = ({ onDeleteCartItem, opened }) => {
           )
         }
         image={
-          isOrdered ? "/images/complete-order.jpg" : "/images/empty-cart.jpg"
+          isOrdered ? "images/complete-order.jpg" : "images/empty-cart.jpg"
         }
       />
     );
@@ -122,7 +122,7 @@ const Drawer = ({ onDeleteCartItem, opened }) => {
           <img
             onClick={cartClosedHandler}
             className="removeBtn cu-p"
-            src="/images/btn-remove.svg"
+            src="images/btn-remove.svg"
             alt="Remove"
           />
         </h2>

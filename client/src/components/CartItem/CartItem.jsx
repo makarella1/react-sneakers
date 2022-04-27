@@ -19,7 +19,7 @@ const CartItem = ({ id, title, price, imageUrl, onRemoveCartItem }) => {
       <img
         onClick={removeItemHandler}
         className="removeBtn cu-p"
-        src="/images/btn-remove.svg"
+        src="images/btn-remove.svg"
         alt="Remove"
       />
     </div>
