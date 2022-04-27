@@ -130,7 +130,7 @@ const App = () => {
         <Header onCartOpened={cartOpenedHandler} />
         <Routes>
           <Route
-            path="/"
+            path=""
             element={
               <Home
                 searchTerm={searchTerm}
@@ -140,8 +140,8 @@ const App = () => {
               />
             }
           ></Route>
-          <Route path="/favorites" element={<Favorites />}></Route>
-          <Route path="/orders" element={<Orders />}></Route>
+          <Route path="favorites" element={<Favorites />}></Route>
+          <Route path="orders" element={<Orders />}></Route>
         </Routes>
       </div>
     </Context.Provider>

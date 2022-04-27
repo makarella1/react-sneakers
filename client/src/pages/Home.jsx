@@ -52,7 +52,7 @@ const Home = ({ searchTerm, clearSearchHandler, inputHandler, isLoading }) => {
       <div className="search d-flex justify-between align-center mb-40">
         <h1 className="mainHeader">{header}</h1>
         <div className="search-block d-flex">
-          <img src="/images/search.svg" alt="Search" />
+          <img src="images/search.svg" alt="Search" />
           <input
             value={searchTerm}
             onChange={inputHandler}
